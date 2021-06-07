@@ -12,6 +12,7 @@
     "vite": "^2.3.5"
   },
   "dependencies": {
-    "ace-builds": "^1.4.12"
+    "ace-builds": "^1.4.12",
+    "axios": "^0.21.1"
   }
 }

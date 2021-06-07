@@ -6,10 +6,14 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "ts-node index.ts"
+    "start": "node index.js"
   },
-  "devDependencies": {
-    "ts-node": "^10.0.0",
-    "typescript": "^4.3.2"
+  "devDependencies": {},
+  "dependencies": {
+    "fastify": "^3.17.0",
+    "fastify-cors": "^6.0.1",
+    "fastify-websocket": "^3.2.0",
+    "node-pty": "^0.10.1",
+    "shelljs": "^0.8.4"
   }
 }

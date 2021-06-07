@@ -17,7 +17,7 @@ body {
 }
 
 #editor,
-#output {
+#output-section {
   height: 100%;
   width: 45%;
   box-shadow: 0px 10px black;
@@ -28,8 +28,51 @@ body {
   border: 2px solid black;
 }
 
+#output-section {
+  display: grid;
+  grid-template-rows: 60px auto;
+}
+
+#toolbox {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+button {
+  height: 45px;
+  width: 120px;
+  font-size: large;
+  text-align: center;
+}
+
 #output {
   background: black;
   border: 2px solid whitesmoke;
   color: whitesmoke;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  padding: 0 0.2em;
+  counter-reset: outputline;
+}
+
+#output p {
+  margin: 0;
+  text-align: start;
+  padding-left: 1em;
+  position: relative;
+}
+
+#output p::before {
+  content: counter(outputline);
+  counter-increment: outputline;
+  padding-right: 0.2em;
+  font-size: small;
+  font-weight: lighter;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
