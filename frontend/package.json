@@ -10,5 +10,8 @@
   "devDependencies": {
     "typescript": "^4.2.3",
     "vite": "^2.3.5"
+  },
+  "dependencies": {
+    "ace-builds": "^1.4.12"
   }
 }

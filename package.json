@@ -11,9 +11,11 @@
   "author": "Blaine <rishi1998@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn workspace frontend build",
-    "dev": "yarn workspace frontend dev",
-    "start": "yarn workspace frontend serve",
-    "start_server": "yarn workspace backend start"
+    "build:app": "yarn workspace frontend build",
+    "dev:app": "yarn workspace frontend dev",
+    "start:app": "yarn workspace frontend serve",
+    "build:server": "yarn workspace backend build",
+    "dev:server": "yarn workspace backend dev",
+    "start:server": "yarn workspace backend start"
   }
 }

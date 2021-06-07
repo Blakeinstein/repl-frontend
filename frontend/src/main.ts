@@ -1,8 +1,5 @@
-import './style.css'
+import "./style.css";
 
-const app = document.querySelector<HTMLDivElement>('#app')!
+import { edit } from "ace-builds";
 
-app.innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`
+const editor = edit("editor");
