@@ -1,0 +1,19 @@
+{
+  "name": "repl-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "main": "index.js",
+  "repository": "https://github.com/Blakeinstein/repl-frontend.git",
+  "author": "Blaine <rishi1998@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn workspace frontend build",
+    "dev": "yarn workspace frontend dev",
+    "start": "yarn workspace frontend serve",
+    "start_server": "yarn workspace backend start"
+  }
+}
