@@ -2,7 +2,21 @@ const fastify = require("fastify")({ logger: true });
 fastify.register(require('fastify-cors'), { 
   origin: "*",
 })
-fastify.register(require('fastify-websocket'))
+fastify.register(require('fastify-websocket'), {
+  errorHandler: function (error, conn /* SocketStream */, req /* FastifyRequest */, reply /* FastifyReply */) {
+    console.log(error);
+    conn.destroy(error);
+  },
+  options: {
+    maxPayload: 1048576, // we set the maximum allowed messages size to 1 MiB (1024 bytes * 1024 bytes)
+    verifyClient: function (info, next) {
+      if (info.req.headers['x-fastify-header'] !== 'fastify is awesome !') {
+        return next(false) // the connection is not allowed
+      }
+      next(true) // the connection is allowed
+    }
+  }
+})
 
 const fs = require("fs");
 const shell = require('shelljs');
