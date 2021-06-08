@@ -4,11 +4,15 @@ import "xterm/css/xterm.css";
 import { edit } from "ace-builds";
 import { Terminal } from "xterm";
 import { AttachAddon } from "xterm-addon-attach";
+import { FitAddon } from "xterm-addon-fit";
 import axios from "axios";
 
 const Editor = edit("editor");
 const Term = new Terminal();
+const fitAddon = new FitAddon();
+Term.loadAddon(fitAddon);
 Term.open(document.getElementById("output")!);
+fitAddon.fit();
 
 const api = "20.204.83.203:3030";
 const id = "h3xca";

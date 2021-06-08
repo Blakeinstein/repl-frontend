@@ -77,7 +77,7 @@ fastify.post("/code/:lang/:id", async (request, reply) => {
 fastify.get('/output/:id', { websocket: true }, (conn, req) => {
   tty.conn(req.params.id, conn.socket);
   conn.socket.on('message', message => {
-    console.log(message);
+    this._shell[id].write(message);
   });
 })
 
