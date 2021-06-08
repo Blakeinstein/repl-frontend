@@ -37,7 +37,7 @@ const tty = {
       rows: 30,
       cwd: pwd
     });
-    this._shell[id].write('clear');
+    this._shell[id].write('clear\r\n');
     
     this._shell[id].on('data', data => {
       this._sockets[id].send(data);

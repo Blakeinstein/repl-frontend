@@ -7,7 +7,7 @@ import axios from "axios";
 const editor = edit("editor");
 const output = document.getElementById("output")!;
 
-const api = "localhost:3030";
+const api = "20.204.83.203:3030";
 const id = "h3xca";
 
 let socket = new WebSocket(`ws://${api}/output/${id}`);
