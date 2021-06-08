@@ -10,9 +10,7 @@ import axios from "axios";
 const Editor = edit("editor");
 const Term = new Terminal({ rows: 100, cols: 100 });
 const fitAddon = new FitAddon();
-Term.loadAddon(fitAddon);
 Term.open(document.getElementById("output")!);
-fitAddon.fit();
 
 const api = "20.204.83.203:3030";
 const id = "h3xca";
