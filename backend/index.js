@@ -62,8 +62,8 @@ fastify.post("/code/:lang/:id", async (request, reply) => {
       fileExt = 'py';
       lang = 'python';
     }
-    await fs.writeFileSync(`${rootPath}/${fileName}.${fileExt}`, request.body.code);
-    let cmd = tty.shell(id)
+    let cmd = tty.shell(id);
+    await fs.writeFileSync(`programs/${id}/${fileName}.${fileExt}`, request.body.code);
     cmd.write(`run-project -l ${lang}\r`);
     return reply.code(200);
   } catch (err) {
