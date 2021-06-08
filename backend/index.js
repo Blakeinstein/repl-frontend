@@ -8,13 +8,7 @@ fastify.register(require('fastify-websocket'), {
     conn.destroy(error);
   },
   options: {
-    maxPayload: 1048576, // we set the maximum allowed messages size to 1 MiB (1024 bytes * 1024 bytes)
-    verifyClient: function (info, next) {
-      if (info.req.headers['x-fastify-header'] !== 'fastify is awesome !') {
-        return next(false) // the connection is not allowed
-      }
-      next(true) // the connection is allowed
-    }
+    maxPayload: 1048576,
   }
 })
 
