@@ -1,8 +1,6 @@
 const fastify = require("fastify")({ logger: true });
 fastify.register(require('fastify-cors'), { 
   origin: "*",
-  preflight: false,
-  strictPreflight: false
 })
 fastify.register(require('fastify-websocket'))
 
@@ -75,7 +73,7 @@ fastify.get('/output/:id', { websocket: true }, (conn, req) => {
   });
 })
 
-fastify.get('/', (req, res) => res.code(200).send("Hello world!"));
+fastify.get('/', (req, res) => res.code(200).send({data: "Hello world!"}));
 
 // Run the server!
 const start = async () => {
