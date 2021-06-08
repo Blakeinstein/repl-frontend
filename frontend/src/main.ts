@@ -8,7 +8,7 @@ import { FitAddon } from "xterm-addon-fit";
 import axios from "axios";
 
 const Editor = edit("editor");
-const Term = new Terminal();
+const Term = new Terminal({ rows: 100, cols: 100 });
 const fitAddon = new FitAddon();
 Term.loadAddon(fitAddon);
 Term.open(document.getElementById("output")!);

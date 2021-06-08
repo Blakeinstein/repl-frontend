@@ -27,8 +27,8 @@ const tty = {
   new (id, pwd) {
     this._shell[id] = pty.spawn(SHELL, [], {
       name: 'xterm-color',
-      cols: 30,
-      rows: 80,
+      cols: 100,
+      rows: 100,
       cwd: pwd
     });
     this._shell[id].write('clear\r\n');
