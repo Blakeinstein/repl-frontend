@@ -1,7 +1,7 @@
 FROM replco/polygott:latest
 WORKDIR /codepair/code
 COPY package*.json ./
-COPY index.js ./
 RUN npm install
 EXPOSE 3030
+COPY index.js ./
 CMD [ "npm", "run", "start" ]
