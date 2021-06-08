@@ -1,4 +1,5 @@
 import "./style.css";
+import "xterm/css/xterm.css";
 
 import { edit } from "ace-builds";
 import { Terminal } from "xterm";
@@ -6,7 +7,7 @@ import { AttachAddon } from "xterm-addon-attach";
 import axios from "axios";
 
 const Editor = edit("editor");
-const Term = new Terminal({ cols: 30, rows: 80 });
+const Term = new Terminal();
 Term.open(document.getElementById("output")!);
 
 const api = "20.204.83.203:3030";
