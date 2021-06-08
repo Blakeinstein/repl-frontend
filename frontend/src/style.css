@@ -51,4 +51,6 @@ button {
   background: black;
   border: 2px solid whitesmoke;
   color: whitesmoke;
+  height: 100%;
+  overflow: hidden;
 }

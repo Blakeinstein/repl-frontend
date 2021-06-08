@@ -24,12 +24,14 @@ const PWD = shell.pwd();
 const tty = {
   _shell: new Map(),
   _sockets: new Map(),
-  new (id, pwd) {
+  new(id, pwd) {
+    let rootPath = `programs/${id}`
+    shell.mkdir('-p', rootPath);
     this._shell[id] = pty.spawn(SHELL, [], {
       name: 'xterm-color',
       cols: 100,
       rows: 100,
-      cwd: pwd
+      cwd: rootPath
     });
     this._shell[id].write('clear\r\n');
     
@@ -60,11 +62,7 @@ fastify.post("/code/:lang/:id", async (request, reply) => {
       fileExt = 'py';
       lang = 'python';
     }
-    let rootPath = `programs/${id}`
-    shell.cd(PWD);
-    shell.mkdir('-p', rootPath);
     await fs.writeFileSync(`${rootPath}/${fileName}.${fileExt}`, request.body.code);
-    shell.cd(rootPath);
     let cmd = tty.shell(id)
     cmd.write(`run-project -l ${lang}\r`);
     return reply.code(200);
