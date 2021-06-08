@@ -4,4 +4,4 @@ COPY package*.json ./
 COPY index.js ./
 RUN npm install
 EXPOSE 3030
-CMD [ "node", "index.js" ]
+CMD [ "npm", "run", "start" ]
