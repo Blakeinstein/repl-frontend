@@ -1,27 +1,30 @@
 import "./style.css";
 
 import { edit } from "ace-builds";
-
+import { Terminal } from "xterm";
+import { AttachAddon } from "xterm-addon-attach";
 import axios from "axios";
 
-const editor = edit("editor");
-const output = document.getElementById("output")!;
+const Editor = edit("editor");
+const Term = new Terminal({ cols: 30, rows: 80 });
+Term.open(document.getElementById("output")!);
 
 const api = "20.204.83.203:3030";
 const id = "h3xca";
 
-let socket = new WebSocket(`ws://${api}/output/${id}`);
-socket.addEventListener("open", (_) => {
-  socket.send("Hello server!");
-});
-socket.addEventListener("message", (ev) => {
-  output.innerHTML += "<p>" + ev.data + "</p>";
-});
+let socket: WebSocket;
+const createSocket = () => {
+  socket = new WebSocket(`ws://${api}/output/${id}`);
+  const attachAddon = new AttachAddon(socket);
+  Term.loadAddon(attachAddon);
+};
+
+createSocket();
 
 document.getElementById("runcode")!.addEventListener("click", () => {
   axios
     .post(`http://${api}/code/python/${id}`, {
-      code: editor.getValue(),
+      code: Editor.getValue(),
     })
     .then((res) => {
       console.log(res);
@@ -30,3 +33,8 @@ document.getElementById("runcode")!.addEventListener("click", () => {
       console.log(err);
     });
 });
+
+const check = () => {
+  requestAnimationFrame(check);
+  if (!socket) createSocket();
+};
