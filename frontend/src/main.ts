@@ -4,15 +4,13 @@ import "xterm/css/xterm.css";
 import { edit } from "ace-builds";
 import { Terminal } from "xterm";
 import { AttachAddon } from "xterm-addon-attach";
-import { FitAddon } from "xterm-addon-fit";
 import axios from "axios";
 
 const Editor = edit("editor");
 const Term = new Terminal({ rows: 100, cols: 100 });
-const fitAddon = new FitAddon();
 Term.open(document.getElementById("output")!);
 
-const api = "20.204.83.203:3030";
+const api = "localhost:3030";
 const id = "h3xca";
 
 let socket: WebSocket;

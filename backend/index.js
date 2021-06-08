@@ -24,29 +24,31 @@ const PWD = shell.pwd();
 const tty = {
   _shell: new Map(),
   _sockets: new Map(),
-  new(id, pwd) {
+  new(id) {
     let rootPath = `programs/${id}`
     shell.mkdir('-p', rootPath);
-    this._shell[id] = pty.spawn(SHELL, [], {
+    let newShell = pty.spawn(SHELL, [], {
       name: 'xterm-color',
       cols: 100,
       rows: 100,
       cwd: rootPath
     });
-    this._shell[id].write('clear\r\n');
+    this._shell.set(id, newShell);
     
-    this._shell[id].on('data', data => {
-      this._sockets[id].send(data);
-    })
+    newShell.on('data', data => {
+      let sock = this._sockets.get(id);
+      sock && sock.send(data);
+    });
+
+    return newShell;
   },
-  shell(id, pwd) {
+  shell(id) {
     if (this._shell.has(id))
-      return this._shell[id];
-    this.new(id, pwd ?? shell.pwd().toString());
-    return this._shell[id]
+      return this._shell.get(id);
+    return this.new(id);
   },
   conn(id, conn) {
-    this._sockets[id] = conn;
+    this._sockets.set(id, conn);
   },
 }
 
@@ -75,7 +77,6 @@ fastify.post("/code/:lang/:id", async (request, reply) => {
 fastify.get('/output/:id', { websocket: true }, (conn, req) => {
   tty.conn(req.params.id, conn.socket);
   conn.socket.on('message', message => {
-    console.log(message);
     tty.shell(req.params.id).write(message);
   });
 })
