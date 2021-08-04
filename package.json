@@ -2,20 +2,40 @@
   "name": "repl-frontend",
   "version": "1.0.0",
   "private": true,
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0"
+  },
   "workspaces": [
     "frontend",
     "backend"
   ],
   "main": "index.js",
-  "repository": "https://github.com/Blakeinstein/repl-frontend.git",
-  "author": "Blaine <rishi1998@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blakeinstein/repl-frontend.git"
+  },
+  "author": {
+    "name": "Blaine",
+    "email": "rishi1998@gmail.com"
+  },
   "license": "MIT",
   "scripts": {
-    "build:app": "yarn workspace frontend build",
-    "dev:app": "yarn workspace frontend dev",
-    "start:app": "yarn workspace frontend serve",
-    "build:server": "yarn workspace backend build",
-    "dev:server": "yarn workspace backend dev",
-    "start:server": "yarn workspace backend start"
-  }
+    "build:app": "yarn f build",
+    "dev:app": "yarn f dev",
+    "start:app": "yarn f serve",
+    "build:server": "yarn b build",
+    "dev:server": "yarn b dev",
+    "start:server": "yarn b start",
+    "f": "yarn workspace frontend",
+    "b": "yarn workspace backend"
+  },
+  "bugs": {
+    "url": "https://github.com/Blakeinstein/repl-frontend/issues"
+  },
+  "readme": "ERROR: No README data found!",
+  "homepage": "https://github.com/Blakeinstein/repl-frontend#readme",
+  "_id": "repl-frontend@1.0.0"
 }
