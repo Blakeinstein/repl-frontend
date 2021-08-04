@@ -1,41 +1,9 @@
-import "./style.css";
-import "xterm/css/xterm.css";
+import Vue from "vue";
+import App from "./App.vue";
+import "splitpanes/dist/splitpanes.css";
 
-import { edit } from "ace-builds";
-import { Terminal } from "xterm";
-import { AttachAddon } from "xterm-addon-attach";
-import axios from "axios";
+Vue.config.productionTip = false;
 
-const Editor = edit("editor");
-const Term = new Terminal({ rows: 100, cols: 100 });
-Term.open(document.getElementById("output")!);
-
-const api = "localhost:3030";
-const id = "h3xca";
-
-let socket: WebSocket;
-const createSocket = () => {
-  socket = new WebSocket(`ws://${api}/output/${id}`);
-  const attachAddon = new AttachAddon(socket);
-  Term.loadAddon(attachAddon);
-};
-
-createSocket();
-
-document.getElementById("runcode")!.addEventListener("click", () => {
-  axios
-    .post(`http://${api}/code/python/${id}`, {
-      code: Editor.getValue(),
-    })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-const check = () => {
-  requestAnimationFrame(check);
-  if (!socket) createSocket();
-};
+new Vue({
+  render: (h) => h(App),
+}).$mount("#app");
