@@ -2,12 +2,6 @@
   "name": "repl-frontend",
   "version": "1.0.0",
   "private": true,
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0"
-  },
   "workspaces": [
     "frontend",
     "backend"
@@ -25,7 +19,6 @@
   "scripts": {
     "build:app": "yarn f build",
     "dev:app": "yarn f dev",
-    "start:app": "yarn f serve",
     "build:server": "yarn b build",
     "dev:server": "yarn b dev",
     "start:server": "yarn b start",

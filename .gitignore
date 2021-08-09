@@ -5,4 +5,5 @@ dist-ssr
 *.local
 */programs
 .env
-constants.ts
+frontend/constants.ts
+test
