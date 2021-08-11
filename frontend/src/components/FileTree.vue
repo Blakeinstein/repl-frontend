@@ -35,14 +35,18 @@ export default Vue.extend({
     //   node.isSelected = false;
     // }
     if (this.active) {
-      let path = this.active.split("/");
+      let pathList = this.active.split("/");
+      let nodePath = [];
       try {
-        let currNode = this.$refs.tree.getFirstNode() as ISlTreeNode<string>;
-        for (let node of path) {
-          currNode = currNode.children.find(
+        let currNode = { children: this.files };
+        for (let node of pathList) {
+          let idx = currNode.children.findIndex(
             (treeNode: ISlTreeNode<string>) => treeNode.title == node
           );
+          nodePath.push(idx);
+          currNode = currNode.children[idx];
         }
+        this.$refs.tree.select(nodePath, true);
       } catch (err) {
         console.log(err);
       }

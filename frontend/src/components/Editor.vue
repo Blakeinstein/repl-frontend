@@ -112,7 +112,7 @@ export default Vue.extend({
       this.editor = editor;
       editor.updateOptions(this.options);
       this.firepad = fromMonaco(
-        this.firepadRef.child(this.main.replace(/[./]/g, "@")),
+        this.firepadRef.child(this.main.replace(/./g, "@")),
         editor,
         this.firepadUser
       );
@@ -120,7 +120,7 @@ export default Vue.extend({
     changeFile(file: string) {
       this.firepad.dispose();
       this.firepad = fromMonaco(
-        this.firepadRef.child(file.replace(/[./]/g, "@")),
+        this.firepadRef.child(file.replace(/./g, "@")),
         this.editor,
         this.firepadUser
       );
