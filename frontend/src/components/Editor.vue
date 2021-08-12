@@ -26,7 +26,7 @@ import firebase from "firebase/app";
 import "firebase/database";
 import MonacoEditor from "vue-monaco";
 import * as monaco from "monaco-editor";
-import constants from "../constants";
+import constants from "../../../constants";
 
 export default Vue.extend({
   name: "Editor",
@@ -62,7 +62,7 @@ export default Vue.extend({
     },
     main: {
       type: String,
-      default: "index.html",
+      default: "index.ts",
     }
   },
   data() {
@@ -71,8 +71,7 @@ export default Vue.extend({
       firebaseApp: null as unknown as firebase.app.App,
       firepadRef: null as unknown as firebase.database.Reference,
       firepad: null as unknown as IFirepad,
-      editor: null as unknown as monaco.editor.IStandaloneCodeEditor,
-      models: {} as Record<string, monaco.editor.ITextModel>,
+      editor: null as unknown as monaco.editor.IStandaloneCodeEditor
     };
   },
   computed: {
@@ -88,7 +87,6 @@ export default Vue.extend({
     firepadUser(): Partial<IFirepadConstructorOptions> {
       let userId = Math.floor(Math.random() * 10);
       return {
-        defaultText: "const test = () => { console.log('Hello World') }",
         userId,
         userName: `user-${userId}`,
       };

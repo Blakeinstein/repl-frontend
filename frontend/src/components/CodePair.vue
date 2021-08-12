@@ -1,7 +1,7 @@
 <template>
   <splitpanes style="height: 100vh">
     <pane min-size="30">
-      <editor :roomId="roomId" />
+      <editor v-if="loaded" :roomId="roomId" :files="files" />
     </pane>
     <pane min-size="30">
       <preview />
@@ -17,6 +17,12 @@ import Preview from "./Preview.vue";
 
 export default Vue.extend({
   name: "CodePair",
+  data() {
+    return {
+      loaded: false,
+      files: null,
+    }
+  },
   components: {
     Splitpanes,
     Pane,
@@ -28,6 +34,14 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+  },
+  async mounted() {
+    let url = process.env.BACKEND_ADDR || "http://localhost:3030";
+    let res = await fetch(`${url}/code/React/${this.roomId}`, {
+      method: "GET",
+    }).then((res) => res.json());
+    this.files = res;
+    this.loaded = true;
   },
 });
 </script>

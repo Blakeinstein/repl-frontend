@@ -38,7 +38,7 @@ export default Vue.extend({
       let pathList = this.active.split("/");
       let nodePath = [];
       try {
-        let currNode = { children: this.files };
+        let currNode = { children: this.files } as ISlTreeNode<string>;
         for (let node of pathList) {
           let idx = currNode.children.findIndex(
             (treeNode: ISlTreeNode<string>) => treeNode.title == node
@@ -46,6 +46,8 @@ export default Vue.extend({
           nodePath.push(idx);
           currNode = currNode.children[idx];
         }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         this.$refs.tree.select(nodePath, true);
       } catch (err) {
         console.log(err);
@@ -64,7 +66,7 @@ export default Vue.extend({
     },
     fileSelected(node: ISlTreeNode<string>) {
       let path = node.path;
-      let currNode = this.nodes[path[0]];
+      let currNode = (this.nodes as ISlTreeNode<string>[])[path[0]];
       let fileName = [currNode.title as string];
       for (let idx of path.slice(1)) {
         currNode = currNode.children[idx];

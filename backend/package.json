@@ -8,12 +8,18 @@
   "scripts": {
     "start": "ts-node index.ts"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/nodegit": "^0.27.3",
+    "@types/shelljs": "^0.8.9",
+    "yarn": "^1.22.11"
+  },
   "dependencies": {
+    "fast-glob": "^3.2.7",
     "fastify": "^3.17.0",
     "fastify-cors": "^6.0.1",
     "fastify-websocket": "^3.2.0",
-    "node-pty": "^0.10.1",
+    "firebase": "^8.9.1",
+    "nodegit": "^0.27.0",
     "shelljs": "^0.8.4",
     "ts-node": "^10.1.0"
   }
