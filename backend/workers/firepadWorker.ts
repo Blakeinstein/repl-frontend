@@ -42,7 +42,7 @@ export default class FirepadWoker implements IFirepadWoker{
     let conf = {
       cwd: join(this.template.wd, this.template.folderName).replace(/\\/g, '/')
     };
-    console.log(this.template.files, conf, fg.sync(this.template.files, conf) )
+    // fg.sync(this.template.files, conf)
     this.filePaths = fg.sync('*');
     this.parentRef.child('users').on('value', (snapshot) => {
       if (!snapshot.hasChildren()) {
@@ -74,7 +74,7 @@ export default class FirepadWoker implements IFirepadWoker{
     return tree;
   }
 
-  work(): void {
+  async work(): Promise<void> {
     if (this.parentRef && this.firepadState) return;
     this.firepadState = true;
     try {
@@ -82,12 +82,10 @@ export default class FirepadWoker implements IFirepadWoker{
         try {
           // let actualPath = this.template.wd + this.template.folderName + path;
           let actualPath = join("A:\\projects\\repl-frontend\\backend\\", path);
-          
-          let firepadRef = this.parentRef.child(path.replace(/./g, "@"));
+          let firepadRef = this.parentRef.child(path.replace(/[.]/g, "@"));
           let firepadInstance = new Firepad.Headless(firepadRef) as firepadHeadless;
-          let fileText = readFileSync(actualPath).toString();
-          console.log(fileText)
-          firepadInstance.setText(fileText, (err?: string, committed?: boolean) => {
+          console.log(firepadInstance.setText);
+          firepadInstance.setText(readFileSync(actualPath).toString(), (err?: string, committed?: boolean) => {
             if (err) throw new Error(err);
           });
           firepadRef.on('value', () => {

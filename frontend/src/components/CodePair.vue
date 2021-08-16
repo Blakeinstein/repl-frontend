@@ -1,7 +1,7 @@
 <template>
   <splitpanes style="height: 100vh">
     <pane min-size="30">
-      <editor v-if="loaded" :roomId="roomId" :files="files" />
+      <editor v-if="loaded" :roomId="roomId" />
     </pane>
     <pane min-size="30">
       <preview />
@@ -14,6 +14,7 @@ import Vue from "vue";
 import { Splitpanes, Pane } from "splitpanes";
 import Editor from "./Editor.vue";
 import Preview from "./Preview.vue";
+import client from "socket.io-client";
 
 export default Vue.extend({
   name: "CodePair",
@@ -21,6 +22,7 @@ export default Vue.extend({
     return {
       loaded: false,
       files: null,
+      socket: null as unknown as ReturnType<typeof client>,
     }
   },
   components: {
@@ -37,10 +39,23 @@ export default Vue.extend({
   },
   async mounted() {
     let url = process.env.BACKEND_ADDR || "http://localhost:3030";
-    let res = await fetch(`${url}/code/React/${this.roomId}`, {
-      method: "GET",
-    }).then((res) => res.json());
-    this.files = res;
+    let socket = client(url) as ReturnType<typeof client>;
+
+    socket.on("create-room", () => {
+      console.log("hello room!");
+      if (socket) {
+        socket.emit("join-room", this.roomId);
+      }
+    });
+
+    socket.on("first-in-room", () => {
+      console.log("first!");
+      if (socket) {
+        socket.emit("create-worker", this.roomId, "React");
+      }
+    });
+
+    this.socket = socket;
     this.loaded = true;
   },
 });

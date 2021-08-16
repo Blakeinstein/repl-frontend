@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "lib": ["esnext"],
     "module": "commonjs",
-    "strict": true,
     "importHelpers": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -11,7 +11,19 @@
     "sourceMap": true,
     "declaration": false,
     "noImplicitAny": false,
+    "rootDir": ".",
+    "outDir": "./dist",
   },
+  "include": [
+    "*.ts",
+    "*.d.ts",
+    "workers/*.ts",
+    "workerScripts/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ],
   "files": [
     "typings.d.ts"
   ],

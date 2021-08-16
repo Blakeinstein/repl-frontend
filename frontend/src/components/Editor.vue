@@ -39,27 +39,6 @@ export default Vue.extend({
       type: String,
       required: true,
     },
-    files: {
-      type: Array,
-      default: (): Array<Record<string, unknown>> => {
-        return [
-          {
-            title: "src",
-            isLeaf: false,
-            children: [
-              {
-                title: "index.js",
-                isLeaf: true,
-              },
-            ],
-          },
-          {
-            title: "index.html",
-            isLeaf: true,
-          },
-        ];
-      },
-    },
     main: {
       type: String,
       default: "index.ts",
@@ -71,8 +50,24 @@ export default Vue.extend({
       firebaseApp: null as unknown as firebase.app.App,
       firepadRef: null as unknown as firebase.database.Reference,
       firepad: null as unknown as IFirepad,
-      editor: null as unknown as monaco.editor.IStandaloneCodeEditor
-    };
+      editor: null as unknown as monaco.editor.IStandaloneCodeEditor,
+      files: [
+        {
+          title: "src",
+          isLeaf: false,
+          children: [
+            {
+              title: "index.js",
+              isLeaf: true,
+            },
+          ],
+        },
+        {
+          title: "index.html",
+          isLeaf: true,
+        },
+      ],
+    }
   },
   computed: {
     options(): monaco.editor.IEditorOptions {

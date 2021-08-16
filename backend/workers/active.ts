@@ -1,16 +1,10 @@
 import Template from "../models/templates";
-import FirepadWoker from "./firepadWorker";
+import { Worker } from "worker_threads";
 
 export interface ActiveWorker {
   id: string;
   template: string;
-  templateWorker: Template;
-  firepadWorker: FirepadWoker;
+  worker: Worker;
 }
 
-export interface ActiveWorkerState {
-  working: boolean;
-  worker: ActiveWorker | null;
-}
-
-export type ActiveWorkers = Record<string, ActiveWorkerState>;
+export type ActiveWorkers = Record<string, ActiveWorker>;
