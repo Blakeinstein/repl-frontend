@@ -1,10 +1,10 @@
 import Template from "../models/templates";
-import { Worker } from "worker_threads";
+import FirepadWoker from "./firepadWorker";
 
 export interface ActiveWorker {
   id: string;
   template: string;
-  worker: Worker;
+  worker: FirepadWoker;
 }
 
 export type ActiveWorkers = Record<string, ActiveWorker>;

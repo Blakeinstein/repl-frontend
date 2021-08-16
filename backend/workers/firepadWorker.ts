@@ -6,7 +6,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
 import Template from "../models/templates";
-import constants from "../../constants";
+import constants from "../constants";
 
 const firebaseApp = firebase.initializeApp(constants.firebaseConfig);
 

@@ -5,6 +5,7 @@ import { Worker } from "worker_threads";
 
 import fastifySocket from '../fastifySocket'; 
 import { ActiveWorkers } from "./active";
+import FirepadWoker from "./firepadWorker";
 import TemplateWorker from "./templateWorker";
 
 // shell.rm("-rf", `${shell.pwd()}/test`);
@@ -49,17 +50,30 @@ fastify.ready(err => {
         console.log(err);
       }
     });
-    socket.on('create-worker', (roomId: string, template: string) => {
+    socket.on('create-worker', async (roomId: string, templateName: string) => {
+      
+      let template = templateWorker.createTemplate(templateName);
+      let firepad = new FirepadWoker(roomId, template);
+
       activeWorkers[roomId] = {
         id: roomId,
-        template,
-        worker: new Worker('./workerScripts/workerScripts.js', {
-          workerData: {
-            template,
-            templateWorker
-          }
-        })
+        template: templateName,
+        worker: firepad
       };
+
+      await template.init();
+      firepad.work();
+      // activeWorkers[roomId] = {
+      //   id: roomId,
+      //   template,
+      //   worker: new Worker('./workerScripts/workerWrapper.js', {
+      //     workerData: {
+      //       path: './workerScript.ts',
+      //       template,
+      //       templateWorker
+      //     }
+      //   })
+      // };
     })
     socket.on("disconnect", () => {
       socket.removeAllListeners();

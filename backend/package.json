@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "tsc && node --inspect=0.0.0.0:9229 ./dist/index.js"
+    "compileWorker": "tsc --module amd",
+    "dev": "node --inspect --require ts-node/register index.ts"
   },
   "devDependencies": {
     "@types/nodegit": "^0.27.3",

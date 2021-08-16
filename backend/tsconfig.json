@@ -7,23 +7,12 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
     "baseUrl": ".",
     "sourceMap": true,
     "declaration": false,
     "noImplicitAny": false,
-    "rootDir": ".",
-    "outDir": "./dist",
   },
-  "include": [
-    "*.ts",
-    "*.d.ts",
-    "workers/*.ts",
-    "workerScripts/*.ts",
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ],
   "files": [
     "typings.d.ts"
   ],
