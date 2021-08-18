@@ -6,5 +6,3 @@ export interface ActiveWorker {
   template: string;
   worker: FirepadWoker;
 }
-
-export type ActiveWorkers = Record<string, ActiveWorker>;

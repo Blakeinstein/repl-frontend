@@ -7,3 +7,4 @@ dist-ssr
 .env
 constants.ts
 test
+firebaseconfig.json

@@ -1,21 +1,21 @@
 import fastifyPkg from "fastify";
 import fastifyCors from "fastify-cors";
 import shell from 'shelljs';
-import { Worker } from "worker_threads";
 
 import fastifySocket from '../fastifySocket'; 
-import { ActiveWorkers } from "./active";
+import { ActiveWorker } from "./active";
 import FirepadWoker from "./firepadWorker";
 import TemplateWorker from "./templateWorker";
 
 // shell.rm("-rf", `${shell.pwd()}/test`);
 const testDir = `${shell.pwd()}/test/attempt-${Math.floor(Math.random()*101)}`;
+console.log("current directory => ", testDir)
 shell.mkdir("-p", testDir);
 
-const templateWorker = new TemplateWorker(testDir);
+const templateWorker = new TemplateWorker(testDir.replace(/\\/g, '/'));
 
 const fastify = fastifyPkg({ logger: true });
-let activeWorkers = <ActiveWorkers>{};
+let activeWorkers = new Map<string, ActiveWorker>();
 
 fastify.register(fastifyCors, { 
   origin: "*",
@@ -35,45 +35,29 @@ fastify.ready(err => {
     socket.on('join-room', (roomId: string) => {
       socket.join(roomId);
       try {
-        // @ts-ignore
-        if (fastify.io.sockets.adapter.rooms.get(roomId).size <= 1) {
+        if (!activeWorkers.get(roomId)) {
           fastify.io.to(socket.id).emit('first-in-room');
         } else {
+          console.log(activeWorkers.get(roomId), "heyyyy")
           socket.broadcast.to(roomId).emit('new-user', socket.id);
         }
         fastify.io.in(roomId).emit(
           'room-user-change',
-          // @ts-ignore
-          Object.values(fastify.io.sockets.adapter.rooms.get(roomId))
+          Object.values(fastify.io.sockets.adapter.rooms.get(roomId) || {})
         );
       } catch(err) {
         console.log(err);
       }
     });
     socket.on('create-worker', async (roomId: string, templateName: string) => {
-      
-      let template = templateWorker.createTemplate(templateName);
-      let firepad = new FirepadWoker(roomId, template);
-
-      activeWorkers[roomId] = {
+      activeWorkers.set(roomId, {
         id: roomId,
         template: templateName,
-        worker: firepad
-      };
+        worker: new FirepadWoker(roomId, templateWorker.createTemplate(templateName))
+      });
 
-      await template.init();
-      firepad.work();
-      // activeWorkers[roomId] = {
-      //   id: roomId,
-      //   template,
-      //   worker: new Worker('./workerScripts/workerWrapper.js', {
-      //     workerData: {
-      //       path: './workerScript.ts',
-      //       template,
-      //       templateWorker
-      //     }
-      //   })
-      // };
+      await activeWorkers.get(roomId).worker.template.init();
+      activeWorkers.get(roomId).worker.work();
     })
     socket.on("disconnect", () => {
       socket.removeAllListeners();

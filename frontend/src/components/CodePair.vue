@@ -1,7 +1,7 @@
 <template>
   <splitpanes style="height: 100vh">
     <pane min-size="30">
-      <editor v-if="loaded" :roomId="roomId" />
+      <editor v-if="loaded" :roomId="roomId" @gotfiletree="loaded = true" />
     </pane>
     <pane min-size="30">
       <preview />
@@ -51,7 +51,7 @@ export default Vue.extend({
     socket.on("first-in-room", () => {
       console.log("first!");
       if (socket) {
-        socket.emit("create-worker", this.roomId, "React");
+        socket.emit("create-worker", this.roomId, "Vanilla");
       }
     });
 

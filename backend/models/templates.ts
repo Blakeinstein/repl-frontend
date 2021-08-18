@@ -10,9 +10,10 @@ interface ITemplate {
   initState: boolean;
   installState: boolean;
   files: string[];
+  glob: boolean;
 }
 
-export default class Template implements ITemplate{
+export default abstract class Template implements ITemplate{
   initState = false;
   installState = false;
   gitTemplate = '';
@@ -20,7 +21,8 @@ export default class Template implements ITemplate{
   startScript = '';
   wd = '';
   files = <string[]>[];
-  output = null as unknown as ChildProcess
+  output = null as unknown as ChildProcess;
+  glob = false;
 
   constructor(wd: string) {
     this.wd = wd;

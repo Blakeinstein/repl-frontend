@@ -1,5 +1,6 @@
 import ReactTemplate from "../models/react";
 import Template from "../models/templates";
+import VanillaTemplate from "../models/vanilla";
 
 export default class TemplateWorker {
   wd: string;
@@ -10,8 +11,9 @@ export default class TemplateWorker {
     switch(template) {
       case 'React':
         return new ReactTemplate(this.wd);
+      case 'Vanilla':
       default:
-        throw new Error("Invalid template");
+        return new VanillaTemplate(this.wd);
     }
   }
 }

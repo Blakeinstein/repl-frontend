@@ -20,6 +20,11 @@ export default Vue.extend({
       activeFile: this.active,
     };
   },
+  watch: {
+    files(newVal) {
+      this.nodes = newVal;
+    },
+  },
   props: {
     files: {
       type: Array,
